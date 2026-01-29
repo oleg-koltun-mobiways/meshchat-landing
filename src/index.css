@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  a {
+    @apply text-blue-600 underline;
+  }
+
+  /*default scroll styles*/
+  ::-webkit-scrollbar {
+    @apply h-1.5 w-1.5 bg-white;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded-md border-2 border-solid border-white min-h-6;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition: background-color 0s 600000s,
+      color 0s 600000s !important;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+    /* Firefox */
+  }
+}
+
+input,
+textarea {
+  touch-action: manipulation !important;
+  font-size: 14px !important;
+}
+
+pre {
+  margin: 0;
+  line-height: 22px;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
