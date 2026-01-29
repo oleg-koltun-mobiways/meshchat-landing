@@ -83,6 +83,8 @@ const TestimonialsSection: React.FC = () => {
     const isAtStart = currentIndex === 0;
     const isAtEnd = currentIndex === maxIndex;
 
+    const visibleTestimonials = testimonials.slice(currentIndex, currentIndex + cardsToShow);
+
     return (
         <div className="w-full max-w-screen-xl mx-auto">
             {/* Company Logos Section */}

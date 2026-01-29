@@ -8,7 +8,7 @@ const BenefitsSection: React.FC = () => {
     ];
 
     return (
-        <div className="flex flex-col gap-7 items-center w-full max-w-[672px] mx-auto">
+        <div className="flex flex-col gap-7 items-center w-full max-w-[672px] mx-auto mb-40">
             {/* Heading */}
             <h2 className="font-bold text-[42px] leading-normal text-black text-center w-full">
                 All in one clear report
