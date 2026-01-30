@@ -1,0 +1,149 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.section {
+    min-height: 100vh;
+    @include flex-center;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 155px;
+    padding-bottom: 200px;
+    // background-image: linear-gradient(180deg, #EDE9F3 0%, #F4BA9C 43%, #F5B999 53%, #ECECFB 100%);
+}
+
+.contentWrapper {
+    max-width: 48rem; // 3xl in Tailwind
+    width: 100%;
+    text-align: left;
+}
+
+.heading {
+    font-weight: 700;
+    font-size: 48px;
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 32px;
+    color: $black;
+    font-family: Inter;
+    line-height: normal;
+}
+
+.featuresContainer {
+    @include flex-column;
+    gap: 12px;
+    justify-content: flex-start;
+    margin-bottom: 75px;
+    max-width: 32rem; // lg in Tailwind
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.featureItem {
+    @include flex-start;
+    gap: 12px;
+}
+
+.checkIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.featureText {
+    font-size: $font-size-lg;
+    color: $black;
+}
+
+.searchFormContainer {
+    @include flex-column;
+    gap: 8px;
+    justify-content: flex-start;
+}
+
+.searchRow {
+    width: 100%;
+    gap: 0.5rem;
+    @include flex-between;
+    width: 100%;
+    margin-top: 36px;
+}
+
+.searchInput {
+    flex: 1;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    @include flex-start;
+    height: 44px;
+    border-radius: $border-radius-lg;
+    border: 1px solid $gray-200;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: $font-size-base;
+
+    &::placeholder {
+        color: $gray-500;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px $gray-300;
+    }
+}
+
+.searchButton {
+    height: 44px;
+    @include button-primary;
+    padding-left: 43px;
+    padding-right: 43px;
+    border-radius: $border-radius-lg;
+    color: #FFF;
+
+    text-align: center;
+    font-family: Satoshi;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.helperText {
+    font-size: $font-size-sm;
+    color: $black;
+    text-align: center;
+    font-weight: 300;
+    margin-bottom: 4px;
+}
+
+.avatarsContainer {
+    @include flex-center;
+    gap: -8px;
+    margin-bottom: 24px;
+}
+
+.avatar {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-left: -0.5rem;
+    flex-shrink: 0;
+
+    &:first-child {
+        margin-left: 0;
+    }
+}
+
+.trustBadges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.trustBadge {
+    font-size: $font-size-lg;
+    font-weight: 500;
+    color: $black;
+    text-align: center;
+}

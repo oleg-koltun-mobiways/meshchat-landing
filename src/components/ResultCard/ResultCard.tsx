@@ -4,6 +4,7 @@ import twitter from '../../assets/images/twitter.svg';
 import linkedin from '../../assets/images/linkedin.svg';
 import facebook from '../../assets/images/facebook.svg';
 import { TikTokIcon, SnapchatIcon } from '../SocialIcons';
+import styles from './ResultCard.module.scss';
 
 interface ResultCardProps {
     name?: string;
@@ -35,53 +36,53 @@ const ResultCard: React.FC<ResultCardProps> = ({
                     facebook,
                 };
                 return (
-                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                        <img src={socialIcons[platform]} alt={platform} className="w-5 h-5" />
+                    <div className={styles.socialIcon}>
+                        <img src={socialIcons[platform]} alt={platform} />
                     </div>
                 );
             default:
                 return (
-                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                        <span className="text-xs">{platform[0].toUpperCase()}</span>
+                    <div className={styles.socialIcon}>
+                        <span>{platform[0].toUpperCase()}</span>
                     </div>
                 );
         }
     };
 
     return (
-        <div className="bg-white border border-white rounded-3xl shadow-[0px_4px_10px_0px_rgba(0,0,0,0.1)] p-5 max-w-lg mx-auto">
+        <div className={styles.card}>
             {/* Success Badge */}
-            <div className="flex items-center gap-2 mb-4">
-                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className={styles.successBadge}>
+                <div className={styles.successIcon}>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                <span className="text-green-600 font-semibold text-base">Your report is ready!</span>
+                <span className={styles.successText}>Your report is ready!</span>
             </div>
 
             {/* User Info */}
-            <div className="flex items-center gap-3 mb-4">
+            <div className={styles.userInfo}>
                 <img
                     src={resultUser}
                     alt={name}
-                    className="w-14 h-14 rounded-full object-cover"
+                    className={styles.userAvatar}
                 />
                 <div>
-                    <h3 className="font-semibold text-xl text-black">{name}</h3>
-                    <p className="text-gray-600 text-sm">{location}</p>
+                    <h3 className={styles.userName}>{name}</h3>
+                    <p className={styles.userLocation}>{location}</p>
                 </div>
             </div>
 
             {/* Data Sources */}
-            <p className="text-gray-600 text-sm mb-3">
-                Data Sources analyzed: <span className="font-medium text-black">{dataSources}</span>
+            <p className={styles.dataSources}>
+                Data Sources analyzed: <span className={styles.count}>{dataSources}</span>
             </p>
 
             {/* Social Profiles */}
-            <div className="flex items-center gap-2 mb-4">
-                <span className="text-gray-600 text-sm">Social profiles:</span>
-                <div className="flex gap-2">
+            <div className={styles.socialProfiles}>
+                <span className={styles.label}>Social profiles:</span>
+                <div className={styles.socialIcons}>
                     {socialProfiles.slice(0, 5).map((platform, index) => (
                         <div key={index}>
                             {renderSocialIcon(platform)}
@@ -91,9 +92,9 @@ const ResultCard: React.FC<ResultCardProps> = ({
             </div>
 
             {/* Overview */}
-            <div className="mb-4">
-                <h4 className="font-semibold text-sm text-gray-700 mb-2">Overview:</h4>
-                <p className="text-gray-500 text-sm leading-relaxed">
+            <div className={styles.overview}>
+                <h4 className={styles.heading}>Overview:</h4>
+                <p className={styles.text}>
                     {overview}{' '}
                     {/* <button className="text-blue-500 underline hover:text-blue-600">
                         Read more

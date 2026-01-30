@@ -1,0 +1,41 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.footer {
+    padding: 24px 32px;
+}
+
+.container {
+    @include container-max-width;
+}
+
+.content {
+    @include flex-start;
+    gap: 12px;
+}
+
+.branding {
+    @include flex-start;
+    gap: 0;
+}
+
+.logo {
+    width: 1.75rem;
+    height: 1.75rem;
+    filter: brightness(0);
+}
+
+.brandName {
+    font-weight: 500;
+    font-size: $font-size-lg;
+    text-transform: uppercase;
+    color: $black;
+    margin-left: 0;
+}
+
+.year {
+    font-weight: 500;
+    font-size: $font-size-lg;
+    text-transform: uppercase;
+    color: $black;
+}

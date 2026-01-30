@@ -1,0 +1,62 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.container {
+    @include flex-column;
+    gap: 28px;
+    align-items: center;
+    width: 100%;
+    max-width: 672px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heading {
+    font-weight: 700;
+    font-size: 42px;
+    line-height: normal;
+    color: $black;
+    text-align: center;
+    width: 100%;
+}
+
+.benefitsList {
+    @include flex-column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.benefitItem {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.checkIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.benefitText {
+    flex: 1;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: $black;
+}
+
+.button {
+    @include button-primary;
+    padding: 16px 24px;
+    border-radius: 16px;
+    height: 54px;
+    width: 100%;
+    max-width: 500px;
+    font-size: $font-size-base;
+    text-transform: uppercase;
+}

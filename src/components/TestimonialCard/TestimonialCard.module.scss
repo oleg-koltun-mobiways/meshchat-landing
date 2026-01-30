@@ -1,0 +1,145 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.container {
+    width: 100%;
+    max-width: $max-width-xl;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.companyLogos {
+    @include flex-center;
+    gap: 2rem;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.companyLogo {
+    height: 54px;
+    @include flex-center;
+    padding: 0 16px;
+
+    .logoText {
+        color: $black;
+        font-weight: 700;
+        font-size: $font-size-sm;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.6;
+    }
+}
+
+.carousel {
+    @include flex-column-center;
+    gap: 24px;
+}
+
+.cardsContainer {
+    overflow: hidden;
+    width: 100%;
+    max-width: 808px;
+}
+
+.cardsTrack {
+    display: flex;
+    gap: 2rem;
+    transition: transform 500ms ease-in-out;
+}
+
+.card {
+    @include card;
+    border-radius: $border-radius-xl;
+    padding: 16px;
+    flex-shrink: 0;
+    width: 244.67px;
+}
+
+.cardContent {
+    @include flex-column;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.testimonialText {
+    color: rgba(0, 0, 0, 0.6);
+    height: 175px;
+    overflow: hidden;
+    font-family: Satoshi;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.stars {
+    height: 20.4px;
+    width: 102px;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.userInfo {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: $border-radius-full;
+    overflow: hidden;
+
+    img {
+        @include image-cover;
+        filter: blur(2px);
+    }
+}
+
+.author {
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: $black;
+}
+
+.navigation {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.navButton {
+    padding: 10px;
+    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+    @include flex-center;
+    @include transition(background-color);
+    cursor: pointer;
+    background-color: $white;
+    border: 1px solid #e4e4e7;
+
+    &:hover:not(:disabled) {
+        background-color: $gray-100;
+    }
+
+    &:disabled {
+        background-color: #dfddea;
+        cursor: not-allowed;
+    }
+
+    img {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+.rotate {
+    transform: rotate(180deg);
+}

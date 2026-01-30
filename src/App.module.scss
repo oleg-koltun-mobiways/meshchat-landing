@@ -1,0 +1,70 @@
+@import './styles/variables';
+@import './styles/mixins';
+
+.container {
+    @include flex-column;
+    gap: 28px;
+    background: linear-gradient(180deg, #EDE9F3 0%, #EDE9F3 2%, #EFD8D5 4%, #F5BA9B 15%, #EDE5ED 35%, #ECECFB 50%, #EBEBFB 60%, #E3E2FB 70%, #DEDEFB 80%, #DDD7F3 90%, #E1C8D2 96%, #E6BDB9 100%);
+}
+
+.section {
+    padding: 64px 32px;
+}
+
+.maxWidthContainer {
+    @include container-max-width;
+}
+
+.resultCardSection {
+    padding: 64px 32px;
+
+    .inner {
+        @include container-max-width;
+    }
+}
+
+.benefitsWrapper {
+    position: relative;
+    padding-left: 32px;
+    padding-right: 32px;
+    z-index: 10;
+    margin-top: -514px;
+    padding-top: 400px;
+
+    .overlay {
+        position: absolute;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 512px;
+        height: 600px;
+        z-index: 0;
+        background: $gradient-benefits-overlay;
+    }
+
+    .content {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+    }
+}
+
+.testimonialSection {
+    padding: 180px 32px 0;
+
+    .inner {
+        @include container-max-width;
+        @include flex-center;
+    }
+}
+
+.howItWorksSection {
+    padding: 126px 32px;
+
+    .container {
+        gap: 28px;
+    }
+}

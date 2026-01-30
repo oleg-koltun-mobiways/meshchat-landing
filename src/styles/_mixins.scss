@@ -1,0 +1,193 @@
+@import './variables';
+
+// Flexbox Mixins
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin flex-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+// Responsive Breakpoints
+@mixin sm {
+    @media (min-width: $breakpoint-sm) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (min-width: $breakpoint-md) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (min-width: $breakpoint-lg) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (min-width: $breakpoint-xl) {
+        @content;
+    }
+}
+
+@mixin xxl {
+    @media (min-width: $breakpoint-2xl) {
+        @content;
+    }
+}
+
+// Button Mixins
+@mixin button-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    transition: all $transition-duration-base $transition-timing;
+    cursor: pointer;
+    border: none;
+    outline: none;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+@mixin button-primary {
+    @include button-base;
+    background-color: $custom-black-1;
+    color: $white;
+
+    &:hover {
+        background-color: #1f1e24;
+    }
+}
+
+@mixin button-rounded {
+    border-radius: $border-radius-xl;
+}
+
+// Card Mixins
+@mixin card {
+    background-color: $white;
+    border-radius: $border-radius-3xl;
+    box-shadow: $shadow-card;
+    border: 1px solid $white;
+}
+
+@mixin card-glass {
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid $white;
+    border-radius: $border-radius-2xl;
+    box-shadow: $shadow-header;
+}
+
+// Text Truncation
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin text-line-clamp($lines) {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+// Transitions
+@mixin transition($properties...) {
+    transition-property: $properties;
+    transition-duration: $transition-duration-base;
+    transition-timing-function: $transition-timing;
+}
+
+// Container
+@mixin container-max-width {
+    max-width: $max-width-xl;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Input Styles
+@mixin input-base {
+    padding: $spacing-4 $spacing-6;
+    border-radius: $border-radius-lg;
+    border: 1px solid $gray-200;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    outline: none;
+    transition: all $transition-duration-base $transition-timing;
+
+    &::placeholder {
+        color: $gray-500;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px $gray-300;
+    }
+}
+
+// Position Absolute Center
+@mixin absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// Backdrop Blur
+@mixin backdrop-blur($amount: 10px) {
+    backdrop-filter: blur($amount);
+    -webkit-backdrop-filter: blur($amount);
+}
+
+// Reset list styles
+@mixin list-reset {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+// Image Cover
+@mixin image-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+// Smooth Scroll
+@mixin smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}

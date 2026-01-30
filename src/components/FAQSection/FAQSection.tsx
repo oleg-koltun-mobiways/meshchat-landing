@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import chevronDown from '../../assets/images/chevron-down-faq.svg';
+import styles from './FAQSection.module.scss';
 
 interface FAQItem {
     question: string;
@@ -33,38 +34,37 @@ export default function FAQSection() {
     };
 
     return (
-        <div className="w-full py-16 px-4">
-            <div className="max-w-screen-xl mx-auto flex flex-col gap-7 items-center">
+        <div className={styles.section}>
+            <div className={styles.container}>
                 {/* Heading */}
-                <h2 className="text-[42px] font-bold text-black text-center">FAQ</h2>
+                <h2 className={styles.heading}>FAQ</h2>
 
                 {/* FAQ Items */}
-                <div className="flex flex-col gap-3 w-full max-w-[500px]">
+                <div className={styles.faqList}>
                     {faqData.map((faq, index) => (
                         <div
                             key={index}
-                            className="flex flex-col gap-3"
+                            className={styles.faqItem}
                         >
                             {/* Question */}
                             <button
                                 onClick={() => toggleFAQ(index)}
-                                className="flex gap-3 items-start w-full text-left"
+                                className={styles.question}
                             >
-                                <p className="flex-1 text-[20px] font-medium text-black leading-normal">
+                                <p className={styles.text}>
                                     {faq.question}
                                 </p>
                                 <img
                                     src={chevronDown}
                                     alt="Toggle"
-                                    className={`w-6 h-6 transition-transform duration-300 ${expandedIndex === index ? '' : 'rotate-180'
-                                        }`}
+                                    className={`${styles.icon} ${expandedIndex === index ? '' : styles.rotated}`}
                                 />
                             </button>
 
                             {/* Answer */}
                             {expandedIndex === index && (
-                                <div className="w-full">
-                                    <p className="text-[16px] font-medium text-[rgba(0,0,0,0.6)] leading-[1.4]">
+                                <div className={styles.answer}>
+                                    <p className={styles.text}>
                                         {faq.answer}
                                     </p>
                                 </div>

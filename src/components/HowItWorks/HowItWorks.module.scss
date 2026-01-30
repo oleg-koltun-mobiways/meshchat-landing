@@ -1,0 +1,59 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.container {
+    @include flex-column;
+    gap: 1.75rem;
+    align-items: center;
+    width: 100%;
+    max-width: 672px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heading {
+    font-weight: 700;
+    font-size: 42px;
+    line-height: normal;
+    color: $black;
+    text-align: center;
+    width: 100%;
+}
+
+.stepsList {
+    @include flex-column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    max-width: 374px;
+}
+
+.stepItem {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: normal;
+    color: $black;
+
+    .number {
+        flex-shrink: 0;
+    }
+
+    .text {
+        flex: 1;
+    }
+}
+
+.button {
+    @include button-primary;
+    padding: 16px 24px;
+    border-radius: 16px;
+    height: 54px;
+    width: 100%;
+    max-width: 500px;
+    font-size: 14px;
+    text-transform: uppercase;
+}

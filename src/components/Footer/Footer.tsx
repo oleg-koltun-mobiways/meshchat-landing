@@ -1,23 +1,24 @@
 import React from 'react';
 import logo from '../../assets/images/logo.svg';
+import styles from './Footer.module.scss';
 
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="px-8 py-6 bg-gradient-to-b from-[#e8d5f0] to-[rgba(255, 125, 38, 0.60)]">
-            <div className="max-w-screen-xl mx-auto">
-                <div className="flex items-center gap-3">
+        <footer className={styles.footer}>
+            <div className={styles.container}>
+                <div className={styles.content}>
                     {/* Logo and Brand */}
-                    <div className="flex items-center gap-0">
-                        <img src={logo} alt="Mesh Chat AI Logo" className="w-7 h-7" />
-                        <span className="font-medium text-lg uppercase text-black ml-0">
+                    <div className={styles.branding}>
+                        <img src={logo} alt="Mesh Chat AI Logo" className={styles.logo} />
+                        <span className={styles.brandName}>
                             Mesh chat AI
                         </span>
                     </div>
 
                     {/* Year */}
-                    <span className="font-medium text-lg uppercase text-black">
+                    <span className={styles.year}>
                         {currentYear}
                     </span>
                 </div>

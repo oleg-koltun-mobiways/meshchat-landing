@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './HowItWorks.module.scss';
 
 const HowItWorks: React.FC = () => {
     const steps = [
@@ -8,24 +9,24 @@ const HowItWorks: React.FC = () => {
     ];
 
     return (
-        <div className="flex flex-col gap-7 items-center w-full max-w-[672px] mx-auto">
+        <div className={styles.container}>
             {/* Heading */}
-            <h2 className="font-bold text-[42px] leading-normal text-black text-center w-full">
+            <h2 className={styles.heading}>
                 How it works?
             </h2>
 
             {/* Steps List */}
-            <div className="flex flex-col gap-3 items-center w-full max-w-[374px]">
+            <div className={styles.stepsList}>
                 {steps.map((step, index) => (
-                    <div key={index} className="flex gap-3 items-start w-full text-[18px] font-medium leading-normal text-black">
-                        <span className="shrink-0">{step.number}</span>
-                        <p className="flex-1">{step.text}</p>
+                    <div key={index} className={styles.stepItem}>
+                        <span className={styles.number}>{step.number}</span>
+                        <p className={styles.text}>{step.text}</p>
                     </div>
                 ))}
             </div>
 
             {/* CTA Button */}
-            <button className="bg-[#131217] text-white px-6 py-4 rounded-2xl h-[54px] w-full max-w-[500px] text-[16px] font-medium uppercase hover:bg-[#1f1e24] transition-colors">
+            <button className={styles.button}>
                 START DIGITAL PROFILE SEARCH
             </button>
         </div>

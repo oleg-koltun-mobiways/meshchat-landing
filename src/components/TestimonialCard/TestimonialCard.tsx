@@ -4,6 +4,7 @@ import testimonialUser2 from '../../assets/images/testimonial-user-2.png';
 import testimonialUser3 from '../../assets/images/testimonial-user-3.png';
 import stars from '../../assets/images/stars.svg';
 import chevronLeft from '../../assets/images/chevron-left.svg';
+import styles from './TestimonialCard.module.scss';
 
 interface Testimonial {
     text: string;
@@ -63,10 +64,10 @@ const TestimonialsSection: React.FC = () => {
     ];
 
     const companyLogos = [
-        { name: "Business Insider", width: "103px" },
-        { name: "Medium", width: "208px" },
-        { name: "Newsfile", width: "152px" },
-        { name: "Yahoo! Finance", width: "148px" }
+        { name: "Business Insider", width: "115px", src: "src/assets/images/incider.svg" },
+        { name: "Medium", width: "208px", src: "src/assets/images/medium.svg" },
+        { name: "Newsfile", width: "152px", src: "src/assets/images/newlife.svg" },
+        { name: "Yahoo! Finance", width: "148px", src: "src/assets/images/yahoo_finance.svg" }
     ];
 
     const cardsToShow = 3;
@@ -83,31 +84,23 @@ const TestimonialsSection: React.FC = () => {
     const isAtStart = currentIndex === 0;
     const isAtEnd = currentIndex === maxIndex;
 
-    const visibleTestimonials = testimonials.slice(currentIndex, currentIndex + cardsToShow);
-
     return (
-        <div className="w-full max-w-screen-xl mx-auto">
+        <div className={styles.container}>
             {/* Company Logos Section */}
-            <div className="flex items-center justify-center gap-8 mb-16 flex-wrap">
+            <div className={styles.companyLogos}>
                 {companyLogos.map((logo, index) => (
-                    <div
-                        key={index}
-                        className="h-[54px] flex items-center justify-center px-4"
-                        style={{ width: logo.width }}
-                    >
-                        <div className="text-black font-bold text-sm uppercase tracking-wider opacity-60">
-                            {logo.name}
-                        </div>
+                    <div key={index}>
+                        <img src={logo.src} alt="" />
                     </div>
                 ))}
             </div>
 
             {/* Carousel Container */}
-            <div className="flex flex-col items-center gap-6">
+            <div className={styles.carousel}>
                 {/* Testimonial Cards - Overflow Container */}
-                <div className="overflow-hidden w-full max-w-[808px]">
+                <div className={styles.cardsContainer}>
                     <div
-                        className="flex gap-8 transition-transform duration-500 ease-in-out"
+                        className={styles.cardsTrack}
                         style={{
                             transform: `translateX(-${currentIndex * (244.67 + 32)}px)` // card width + gap
                         }}
@@ -115,30 +108,28 @@ const TestimonialsSection: React.FC = () => {
                         {testimonials.map((testimonial, index) => (
                             <div
                                 key={index}
-                                className="bg-white rounded-[20px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)] p-4 flex-shrink-0"
-                                style={{ width: '244.67px' }}
+                                className={styles.card}
                             >
                                 {/* Testimonial Content */}
-                                <div className="flex flex-col gap-4 mb-4">
-                                    <p className="text-[18px] leading-[1.4] text-[rgba(0,0,0,0.6)] h-[175px] overflow-hidden">
+                                <div className={styles.cardContent}>
+                                    <p className={styles.testimonialText}>
                                         {testimonial.text}
                                     </p>
                                     {/* Stars */}
-                                    <div className="h-[20.4px] w-[102px]">
-                                        <img src={stars} alt="5 stars" className="w-full h-full" />
+                                    <div className={styles.stars}>
+                                        <img src={stars} alt="5 stars" />
                                     </div>
                                 </div>
 
                                 {/* User Info */}
-                                <div className="flex gap-2 items-center">
-                                    <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
+                                <div className={styles.userInfo}>
+                                    <div className={styles.avatar}>
                                         <img
                                             src={testimonial.avatar}
                                             alt={testimonial.author}
-                                            className="w-full h-full object-cover"
                                         />
                                     </div>
-                                    <p className="text-[18px] leading-[1.4] font-medium text-black">
+                                    <p className={styles.author}>
                                         {testimonial.author}
                                     </p>
                                 </div>
@@ -148,31 +139,25 @@ const TestimonialsSection: React.FC = () => {
                 </div>
 
                 {/* Navigation Buttons */}
-                <div className="flex gap-3 items-center justify-center">
+                <div className={styles.navigation}>
                     {/* Previous Button */}
                     <button
                         onClick={handlePrev}
                         disabled={isAtStart}
-                        className={`p-[10px] rounded-md w-[40px] h-[40px] flex items-center justify-center transition-colors ${isAtStart
-                            ? 'bg-[#dfddea] cursor-not-allowed'
-                            : 'bg-white border border-[#e4e4e7] hover:bg-gray-50'
-                            }`}
+                        className={styles.navButton}
                         aria-label="Previous testimonial"
                     >
-                        <img src={chevronLeft} alt="Previous" className="w-4 h-4" />
+                        <img src={chevronLeft} alt="Previous" />
                     </button>
 
                     {/* Next Button */}
                     <button
                         onClick={handleNext}
                         disabled={isAtEnd}
-                        className={`p-[10px] rounded-md w-[40px] h-[40px] flex items-center justify-center transition-colors ${isAtEnd
-                            ? 'bg-[#dfddea] cursor-not-allowed'
-                            : 'bg-white border border-[#e4e4e7] hover:bg-gray-50'
-                            }`}
+                        className={styles.navButton}
                         aria-label="Next testimonial"
                     >
-                        <img src={chevronLeft} alt="Next" className="w-4 h-4 rotate-180" />
+                        <img src={chevronLeft} alt="Next" className={styles.rotate} />
                     </button>
                 </div>
             </div>

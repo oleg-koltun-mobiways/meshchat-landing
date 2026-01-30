@@ -1,0 +1,58 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-index-header;
+    padding: 34px 62px;
+}
+
+.container {
+    @include container-max-width;
+}
+
+.innerContainer {
+    @include card-glass;
+    padding: 6px 12px;
+    @include flex-between;
+}
+
+.logoContainer {
+    @include flex-start;
+    gap: 0;
+}
+
+.logoImage {
+    width: 2rem;
+    height: 2rem;
+    filter: brightness(0);
+}
+
+.logoText {
+    font-weight: 500;
+    font-size: $font-size-lg;
+    color: $black;
+    margin-left: 0;
+
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 41.971px;
+}
+
+.button {
+    @include button-primary;
+    padding: 11px 24px;
+    border-radius: 16px;
+    font-family: Satoshi;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    height: auto;
+}
