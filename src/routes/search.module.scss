@@ -1,0 +1,306 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.page {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #EDE9F3 0%, #EDE9F3 2%, #EFD8D5 4%, #F5BA9B 15%, #EDE5ED 35%, #ECECFB 50%, #EBEBFB 60%, #E3E2FB 70%, #DEDEFB 80%, #DDD7F3 90%, #E1C8D2 96%, #E6BDB9 100%);
+    padding-top: 120px;
+    padding-bottom: 48px;
+}
+
+.searchSection {
+    @include flex-column;
+    align-items: center;
+    gap: 48px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.searchContainer {
+    @include flex-column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.searchInputWrapper {
+    @include flex-between;
+    width: 100%;
+    gap: 8px;
+}
+
+.searchInputContainer {
+    position: relative;
+    flex: 1;
+    @include flex-center;
+}
+
+.searchInput {
+    width: 100%;
+    height: 56px;
+    padding-left: 16px;
+    padding-right: 48px;
+    border-radius: $border-radius-lg;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: $font-size-base;
+    font-family: $font-family-sans;
+    color: $black;
+    outline: none;
+    transition: all $transition-duration-base $transition-timing;
+
+    &::placeholder {
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    &:focus {
+        outline: none;
+        border-color: rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+    }
+
+    &:focus-visible {
+        outline: 2px solid $custom-black-1;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05), 0 0 0 4px rgba(31, 30, 36, 0.2);
+    }
+
+    @media screen and (max-width: 600px) {}
+}
+
+.clearButton {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    @include flex-center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity $transition-duration-base $transition-timing;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $custom-black-1;
+        outline-offset: 2px;
+        border-radius: 4px;
+    }
+
+    .icon {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.searchButton {
+    @include flex-center;
+    width: 56px;
+    height: 56px;
+    border-radius: $border-radius-lg;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    transition: all $transition-duration-base $transition-timing;
+    flex-shrink: 0;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: $shadow-2;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $custom-black-1;
+        outline-offset: 2px;
+        box-shadow: $shadow-2, 0 0 0 4px rgba(31, 30, 36, 0.2);
+    }
+
+    .icon {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.helperText {
+    font-size: $font-size-sm;
+    color: $black;
+    text-align: center;
+    font-weight: 300;
+    margin: 0;
+}
+
+.resultsSection {
+    @include flex-column;
+    align-items: center;
+    gap: 48px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.profileCard {
+    @include flex-start;
+    gap: 16px;
+    padding: 14px 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: $border-radius-lg;
+    width: 100%;
+    max-width: 436px;
+}
+
+.profileAvatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8BDEA 0%, #C86CC9 100%);
+    flex-shrink: 0;
+}
+
+.profileName {
+    font-size: $font-size-base;
+    color: $black;
+    margin: 0;
+    line-height: 54px;
+}
+
+.loadingContainer {
+    @include flex-column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+}
+
+.socialIcons {
+    @include flex-center;
+    gap: 8px;
+}
+
+.socialIcon {
+    width: 32px;
+    height: 32px;
+}
+
+.loadingTitle {
+    font-size: $font-size-base;
+    color: $black;
+    text-align: center;
+    margin: 0;
+    font-weight: 500;
+}
+
+.progressBar {
+    width: 100%;
+    max-width: 350px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progressFill {
+    height: 100%;
+    width: 35%;
+    background: linear-gradient(90deg, #FF6B35 0%, #FFA500 100%);
+    border-radius: 4px;
+    animation: progressAnimation 2s ease-in-out infinite;
+}
+
+@keyframes progressAnimation {
+    0% {
+        width: 35%;
+    }
+
+    50% {
+        width: 70%;
+    }
+
+    100% {
+        width: 35%;
+    }
+}
+
+.stepsList {
+    @include flex-column;
+    gap: 12px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.stepItem {
+    @include flex-start;
+    gap: 12px;
+}
+
+.stepIcon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.stepIconPending {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.stepText {
+    font-size: $font-size-sm;
+    color: $black;
+    margin: 0;
+}
+
+.stepTextPending {
+    font-size: $font-size-sm;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+
+// Tablet and up
+@include md {
+    .page {
+        padding-top: 140px;
+    }
+
+    .searchSection {
+        gap: 64px;
+    }
+
+    .searchContainer {
+        max-width: 600px;
+    }
+
+    .searchInputWrapper {
+        gap: 12px;
+    }
+
+    .searchInput {
+        font-size: $font-size-lg;
+    }
+}
+
+// Desktop
+@include lg {
+    .page {
+        padding-top: 160px;
+    }
+
+    .searchSection {
+        gap: 80px;
+    }
+
+    .searchContainer {
+        max-width: 685px;
+    }
+
+    .resultsSection {
+        max-width: 766px;
+    }
+}

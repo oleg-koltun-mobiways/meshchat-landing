@@ -66,8 +66,15 @@
     margin-bottom: 12px;
 
     .count {
-        font-weight: 500;
-        color: $black;
+        margin-right: $font-size-sm;
+
+        @media screen and (max-width: 400px) {
+          font-size: $font-size-xs;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        font-size: $font-size-xs;
     }
 }
 
