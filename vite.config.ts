@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   const API_URL = `${env.VITE_API_BASE_URL ?? 'http://localhost:3000'}`;
 
   return {
+    base: '/meshchat-landing/',
     define: {
       'process.env': process.env
     },
