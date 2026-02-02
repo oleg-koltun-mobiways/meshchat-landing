@@ -1,5 +1,5 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .header {
     position: fixed;
@@ -49,7 +49,7 @@
     line-height: 41.971px;
 
     @media screen and (max-width: 600px) {
-      display: none;
+        display: none;
     }
 }
 

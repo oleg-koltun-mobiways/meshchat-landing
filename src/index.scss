@@ -1,9 +1,8 @@
+// Import global SCSS files - @use rules MUST come first
+@use './styles/fonts';
+@use './styles/variables' as *;
+@use './styles/mixins' as *;
+@use './styles/base';
+
+// Import external fonts (URL imports must come after @use rules)
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-// Import fonts
-@import './styles/fonts';
-
-// Import global SCSS files
-@import './styles/variables';
-@import './styles/mixins';
-@import './styles/base';

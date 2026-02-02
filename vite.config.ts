@@ -21,6 +21,13 @@ export default defineConfig(({ mode }) => {
           rewrite: (path) => path.replace(/^\/api/, '')
         }
       }
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler' // Use modern Sass API instead of legacy
+        }
+      }
     }
   }
 })
