@@ -1,5 +1,5 @@
 import React from 'react';
-import snapchatIcon from '../../assets/images/snapchat.svg';
+import snapchatIcon from '../../assets/images/Snapchat.svg';
 
 interface SnapchatIconProps {
     size?: number;

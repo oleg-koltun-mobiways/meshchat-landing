@@ -1,5 +1,5 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .header {
     position: fixed;
@@ -8,6 +8,10 @@
     right: 0;
     z-index: $z-index-header;
     padding: 34px 62px;
+
+    @media screen and (max-width: 768px) {
+        padding: 20px 16px;
+    }
 }
 
 .container {
@@ -43,6 +47,10 @@
     font-style: normal;
     font-weight: 500;
     line-height: 41.971px;
+
+    @media screen and (max-width: 600px) {
+        display: none;
+    }
 }
 
 .button {

@@ -1,4 +1,4 @@
-@import './variables';
+@use './variables' as *;
 
 // Flexbox Mixins
 @mixin flex-center {
@@ -76,6 +76,11 @@
     &:focus {
         outline: none;
     }
+
+    &:focus-visible {
+        outline: 2px solid $custom-black-1;
+        outline-offset: 2px;
+    }
 }
 
 @mixin button-primary {
@@ -85,6 +90,12 @@
 
     &:hover {
         background-color: #1f1e24;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $custom-black-1;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 4px rgba(31, 30, 36, 0.2);
     }
 }
 
@@ -155,6 +166,12 @@
     &:focus {
         outline: none;
         box-shadow: 0 0 0 2px $gray-300;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $custom-black-1;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 2px $gray-300, 0 0 0 4px rgba(31, 30, 36, 0.2);
     }
 }
 

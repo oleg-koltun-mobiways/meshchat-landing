@@ -1,4 +1,5 @@
 import React from 'react';
+import { scrollToSearch } from '../../utils/scrollToSearch';
 import styles from './HowItWorks.module.scss';
 
 const HowItWorks: React.FC = () => {
@@ -26,7 +27,7 @@ const HowItWorks: React.FC = () => {
             </div>
 
             {/* CTA Button */}
-            <button className={styles.button}>
+            <button className={styles.button} onClick={scrollToSearch}>
                 START DIGITAL PROFILE SEARCH
             </button>
         </div>

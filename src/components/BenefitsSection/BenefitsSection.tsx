@@ -1,5 +1,6 @@
 import React from 'react';
 import checkIcon from '../../assets/images/check.svg';
+import { scrollToSearch } from '../../utils/scrollToSearch';
 import styles from './BenefitsSection.module.scss';
 
 const BenefitsSection: React.FC = () => {
@@ -28,7 +29,7 @@ const BenefitsSection: React.FC = () => {
             </div>
 
             {/* CTA Button */}
-            <button className={styles.button}>
+            <button className={styles.button} onClick={scrollToSearch}>
                 SEARCH NOW
             </button>
         </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import checkIcon from '../../assets/images/check.svg';
 import user1 from '../../assets/images/user1.png';
 import user2 from '../../assets/images/user2.png';
@@ -9,7 +10,9 @@ import user6 from '../../assets/images/user6.png';
 import styles from './Hero.module.scss';
 
 const Hero: React.FC = () => {
+    const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     const features = [
         "Public social profiles in one place",
@@ -20,7 +23,18 @@ const Hero: React.FC = () => {
     const testimonialUsers = [user1, user2, user3, user4, user5, user6];
 
     const handleSearch = () => {
-        console.log('Search for:', searchQuery);
+        if (searchQuery.trim()) {
+            navigate({
+                to: '/search',
+                search: { search: searchQuery.trim() },
+            });
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
     };
 
     return (
@@ -29,7 +43,6 @@ const Hero: React.FC = () => {
                 {/* Main Heading */}
                 <h1 className={styles.heading}>
                     Discover Anyone's Digital
-                    <br />
                     Profile Instantly
                 </h1>
 
@@ -40,14 +53,16 @@ const Hero: React.FC = () => {
                             <span className={styles.featureText}>{feature}</span>
                         </div>
                     ))}
-                    <div className={styles.searchFormContainer}>
+                    <div className={styles.searchFormContainer} id="search-section">
                         <div className={styles.searchRow}>
                             <input
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
+                                onKeyDown={handleKeyDown}
                                 placeholder="Angelina Jolie, USA, actress"
                                 className={styles.searchInput}
+                                ref={searchInputRef}
                             />
                             <button
                                 onClick={handleSearch}

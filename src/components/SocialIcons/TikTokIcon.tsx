@@ -1,5 +1,5 @@
 import React from 'react';
-import tiktokIcon from '../../assets/images/tiktok.svg';
+import tiktokIcon from '../../assets/images/TikTok.svg';
 
 interface TikTokIconProps {
     size?: number;

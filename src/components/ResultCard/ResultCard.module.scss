@@ -1,5 +1,5 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .card {
     @include card;
@@ -66,8 +66,15 @@
     margin-bottom: 12px;
 
     .count {
-        font-weight: 500;
-        color: $black;
+        margin-right: $font-size-sm;
+
+        @media screen and (max-width: 400px) {
+            font-size: $font-size-xs;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        font-size: $font-size-xs;
     }
 }
 

@@ -14,6 +14,10 @@ interface Testimonial {
 
 const TestimonialsSection: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragOffset, setDragOffset] = useState(0);
 
     const testimonials: Testimonial[] = [
         {
@@ -73,12 +77,54 @@ const TestimonialsSection: React.FC = () => {
     const cardsToShow = 3;
     const maxIndex = testimonials.length - cardsToShow;
 
+    // Minimum swipe distance (in px) to trigger navigation
+    const minSwipeDistance = 50;
+
     const handlePrev = () => {
         setCurrentIndex((prev) => Math.max(0, prev - 1));
     };
 
     const handleNext = () => {
         setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
+    };
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+        setIsDragging(true);
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        if (!touchStart) return;
+
+        const currentTouch = e.targetTouches[0].clientX;
+        setTouchEnd(currentTouch);
+
+        // Calculate the drag distance
+        const diff = currentTouch - touchStart;
+
+        // Apply drag offset with boundaries
+        const maxDrag = currentIndex === 0 ? 0 : -Infinity;
+        const minDrag = currentIndex === maxIndex ? 0 : Infinity;
+
+        setDragOffset(Math.max(maxDrag, Math.min(minDrag, diff)));
+    };
+
+    const onTouchEnd = () => {
+        setIsDragging(false);
+        setDragOffset(0);
+
+        if (!touchStart || !touchEnd) return;
+
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe && currentIndex < maxIndex) {
+            handleNext();
+        } else if (isRightSwipe && currentIndex > 0) {
+            handlePrev();
+        }
     };
 
     const isAtStart = currentIndex === 0;
@@ -89,7 +135,7 @@ const TestimonialsSection: React.FC = () => {
             {/* Company Logos Section */}
             <div className={styles.companyLogos}>
                 {companyLogos.map((logo, index) => (
-                    <div key={index}>
+                    <div key={index} className={styles.logos}>
                         <img src={logo.src} alt="" />
                     </div>
                 ))}
@@ -98,11 +144,18 @@ const TestimonialsSection: React.FC = () => {
             {/* Carousel Container */}
             <div className={styles.carousel}>
                 {/* Testimonial Cards - Overflow Container */}
-                <div className={styles.cardsContainer}>
+                <div
+                    className={styles.cardsContainer}
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
+                >
                     <div
                         className={styles.cardsTrack}
+                        data-dragging={isDragging}
                         style={{
-                            transform: `translateX(-${currentIndex * (244.67 + 32)}px)` // card width + gap
+                            transform: `translateX(${dragOffset - (currentIndex * (244.67 + 32))}px)`,
+                            transition: isDragging ? 'none' : undefined
                         }}
                     >
                         {testimonials.map((testimonial, index) => (
