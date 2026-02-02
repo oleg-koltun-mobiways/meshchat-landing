@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - MES-32-animation-screens
+      - dev
 
 permissions:
   contents: read
