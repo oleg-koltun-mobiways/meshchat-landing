@@ -14,15 +14,15 @@ const faqData: FAQItem[] = [
     },
     {
         question: 'Do you use private or confidential information?',
-        answer: 'No, we only use publicly available information. We respect privacy and do not access or use any private or confidential data.',
+        answer: 'Our data comes from various open sources, including public accounts and accessible databases. This allows us to provide accurate and reliable information while respecting privacy.',
     },
     {
         question: 'Can I delete my profile?',
-        answer: 'Yes, you can request to delete your profile at any time. We will remove all associated data from our systems.',
+        answer: 'Our data comes from various open sources, including public accounts and accessible databases. This allows us to provide accurate and reliable information while respecting privacy.',
     },
     {
         question: 'How accurate is this?',
-        answer: 'Our data accuracy is very high as we use multiple sources and verification methods. However, we recommend verifying critical information independently.',
+        answer: 'Our data comes from various open sources, including public accounts and accessible databases. This allows us to provide accurate and reliable information while respecting privacy.',
     },
 ];
 
