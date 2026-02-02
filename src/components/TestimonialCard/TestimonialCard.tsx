@@ -4,6 +4,10 @@ import testimonialUser2 from '../../assets/images/testimonial-user-2.png';
 import testimonialUser3 from '../../assets/images/testimonial-user-3.png';
 import stars from '../../assets/images/stars.svg';
 import chevronLeft from '../../assets/images/chevron-left.svg';
+import inciderLogo from '../../assets/images/incider.svg';
+import mediumLogo from '../../assets/images/medium.svg';
+import newlifeLogo from '../../assets/images/newlife.svg';
+import yahooFinanceLogo from '../../assets/images/yahoo_finance.svg';
 import styles from './TestimonialCard.module.scss';
 
 interface Testimonial {
@@ -68,10 +72,10 @@ const TestimonialsSection: React.FC = () => {
     ];
 
     const companyLogos = [
-        { name: "Business Insider", width: "115px", src: "src/assets/images/incider.svg" },
-        { name: "Medium", width: "208px", src: "src/assets/images/medium.svg" },
-        { name: "Newsfile", width: "152px", src: "src/assets/images/newlife.svg" },
-        { name: "Yahoo! Finance", width: "148px", src: "src/assets/images/yahoo_finance.svg" }
+        { name: "Business Insider", width: "115px", src: inciderLogo },
+        { name: "Medium", width: "208px", src: mediumLogo },
+        { name: "Newsfile", width: "152px", src: newlifeLogo },
+        { name: "Yahoo! Finance", width: "148px", src: yahooFinanceLogo }
     ];
 
     const cardsToShow = 3;
