@@ -1,0 +1,214 @@
+.loginContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,
+            hsl(0, 70%, 85%) 0%,
+            hsl(15, 65%, 82%) 25%,
+            hsl(280, 45%, 75%) 75%,
+            hsl(270, 50%, 70%) 100%);
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: backgroundMove 20s linear infinite;
+        pointer-events: none;
+    }
+}
+
+@keyframes backgroundMove {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+
+.loginCard {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 440px;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    position: relative;
+    z-index: 1;
+    animation: cardSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    @media (max-width: 480px) {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logoSection {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.logo {
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, hsl(280, 60%, 50%), hsl(270, 70%, 60%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: hsl(0, 0%, 40%);
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(0, 0%, 25%);
+    letter-spacing: 0.3px;
+}
+
+.input {
+    padding: 0.875rem 1rem;
+    border: 2px solid hsl(0, 0%, 90%);
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    color: hsl(0, 0%, 15%);
+    font-family: inherit;
+
+    &::placeholder {
+        color: hsl(0, 0%, 60%);
+    }
+
+    &:focus {
+        outline: none;
+        border-color: hsl(270, 60%, 60%);
+        box-shadow: 0 0 0 4px hsla(270, 60%, 60%, 0.1);
+    }
+
+    &:disabled {
+        background: hsl(0, 0%, 96%);
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+}
+
+.error {
+    background: hsla(0, 80%, 95%, 1);
+    border: 1px solid hsla(0, 70%, 85%, 1);
+    color: hsl(0, 70%, 40%);
+    padding: 0.875rem 1rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    animation: errorShake 0.4s ease;
+}
+
+@keyframes errorShake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+.submitButton {
+    background: linear-gradient(135deg, hsl(280, 60%, 55%), hsl(270, 70%, 65%));
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    box-shadow:
+        0 4px 12px hsla(270, 60%, 50%, 0.3),
+        0 2px 4px hsla(270, 60%, 50%, 0.2);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow:
+            0 6px 20px hsla(270, 60%, 50%, 0.4),
+            0 3px 6px hsla(270, 60%, 50%, 0.3);
+
+        &::before {
+            left: 100%;
+        }
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+        transform: none;
+    }
+}

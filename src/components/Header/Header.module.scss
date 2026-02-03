@@ -53,6 +53,11 @@
     }
 }
 
+.buttonGroup {
+    @include flex-start;
+    gap: 12px;
+}
+
 .button {
     @include button-primary;
     padding: 11px 24px;
@@ -63,4 +68,25 @@
     font-weight: 500;
     line-height: normal;
     height: auto;
+}
+
+.logoutButton {
+    padding: 11px 24px;
+    border-radius: 16px;
+    font-family: Satoshi;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    height: auto;
+    background: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    color: $black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.05);
+        border-color: rgba(0, 0, 0, 0.2);
+    }
 }
