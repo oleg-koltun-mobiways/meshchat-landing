@@ -13,6 +13,8 @@ type SearchParams = {
     search?: string;
 };
 
+const animationTime = 10000;
+
 export const Route = createFileRoute('/search')({
     component: SearchComponent,
     validateSearch: (search: Record<string, unknown>): SearchParams => {
@@ -27,18 +29,33 @@ function SearchComponent() {
     const navigate = Route.useNavigate();
     const [searchQuery, setSearchQuery] = useState(searchParam || '');
     const [isSearching, setIsSearching] = useState(!!searchParam);
+    const [animationStage, setAnimationStage] = useState(0);
 
     useEffect(() => {
         setSearchQuery(searchParam || '');
         if (searchParam) {
-            // Simulate search process
             setIsSearching(true);
-            const timer = setTimeout(() => {
-                setIsSearching(false);
-            }, 100000);
-            return () => clearTimeout(timer);
+            setAnimationStage(0);
+
+            const timers: NodeJS.Timeout[] = [];
+
+            timers.push(setTimeout(() => setAnimationStage(1), 1000));
+            timers.push(setTimeout(() => setAnimationStage(2), 5000));
+            timers.push(setTimeout(() => setAnimationStage(3), 8000));
+            timers.push(setTimeout(() => setAnimationStage(4), 10000));
+            timers.push(setTimeout(() => setAnimationStage(5), 12000));
+
+            const finalTimer = setTimeout(() => {
+                // Optional: handle end of search
+            }, animationTime + 5000);
+
+            return () => {
+                timers.forEach(clearTimeout);
+                clearTimeout(finalTimer);
+            };
         } else {
             setIsSearching(false);
+            setAnimationStage(0);
         }
     }, [searchParam]);
 
@@ -51,62 +68,52 @@ function SearchComponent() {
         }
     };
 
-    // const handleClearClick = () => {
-    //     setSearchQuery('');
-    // };
-    //
-    // const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    //     if (e.key === 'Enter') {
-    //         handleSearchClick();
-    //     }
-    // };
+    const getStepState = (stepIndex: number) => {
+        if (animationStage === 0) {
+            return { icon: circleDashedIcon, className: styles.stepIconSpinning };
+        }
+
+        if (stepIndex === 0) { // Analyzing logic part
+            if (animationStage >= 2) {
+                return { icon: checkIcon, className: styles.stepIconPulsing };
+            } else if (animationStage >= 1) {
+                return { icon: loaderCircleIcon, className: styles.stepIconSpinAndPulse };
+            }
+        } else if (stepIndex === 1) { // Evaluating answers
+            if (animationStage >= 3) {
+                return { icon: checkIcon, className: styles.stepIconPulsing };
+            } else if (animationStage >= 2) {
+                return { icon: loaderCircleIcon, className: styles.stepIconSpinAndPulse };
+            }
+        } else if (stepIndex === 2) { // Calculating final score
+            if (animationStage >= 4) {
+                return { icon: checkIcon, className: styles.stepIconPulsing };
+            } else if (animationStage >= 3) {
+                return { icon: loaderCircleIcon, className: styles.stepIconSpinAndPulse };
+            }
+        }
+
+        return { icon: circleDashedIcon, className: styles.stepIconSpinning };
+    };
+
+    const step1 = getStepState(0);
+    const step2 = getStepState(1);
+    const step3 = getStepState(2);
 
     return (
         <div className={styles.page}>
             <div className={styles.searchSection}>
                 <div className={styles.searchContainer}>
-                    {/* Search Input */}
-                    {/*<div className={styles.searchInputWrapper}>*/}
-                    {/*    <div className={styles.searchInputContainer}>*/}
-                    {/*        <input*/}
-                    {/*            type="text"*/}
-                    {/*            value={searchQuery}*/}
-                    {/*            onChange={(e) => setSearchQuery(e.target.value)}*/}
-                    {/*            onKeyPress={handleKeyPress}*/}
-                    {/*            placeholder="Angelina Jolie, USA, actress"*/}
-                    {/*            className={styles.searchInput}*/}
-                    {/*        />*/}
-                    {/*        {searchQuery && (*/}
-                    {/*            <button*/}
-                    {/*                onClick={handleClearClick}*/}
-                    {/*                className={styles.clearButton}*/}
-                    {/*                aria-label="Clear search"*/}
-                    {/*            >*/}
-                    {/*                <img src={closeIcon} alt="Clear" className={styles.icon} />*/}
-                    {/*            </button>*/}
-                    {/*        )}*/}
-                    {/*    </div>*/}
-                    {/*    <button*/}
-                    {/*        onClick={handleSearchClick}*/}
-                    {/*        className={styles.searchButton}*/}
-                    {/*        aria-label="Search"*/}
-                    {/*    >*/}
-                    {/*        <img src={searchIcon} alt="Search" className={styles.icon} />*/}
-                    {/*    </button>*/}
-                    {/*</div>*/}
                     <SearchBar value={searchQuery} />
                 </div>
 
-                {/* Search Results / Loading State */}
                 {isSearching && searchParam && (
                     <div className={styles.resultsSection}>
-                        {/* Profile Card */}
                         <div className={styles.profileCard}>
                             <div className={styles.profileAvatar}></div>
                             <p className={styles.profileName}>{searchParam}</p>
                         </div>
 
-                        {/* Loading State */}
                         <div className={styles.loadingContainer}>
                             <div className={styles.socialIcons}>
                                 <img src={twitterIcon} alt="Twitter/X" className={styles.socialIcon} />
@@ -115,27 +122,42 @@ function SearchComponent() {
                             </div>
 
                             <p className={styles.loadingTitle}>
-                                Searching "Angelina Jolie" Getting your results...
+                                Searching "{searchParam}" Getting your results...
                             </p>
 
                             <div className={styles.progressBar}>
-                                <div className={styles.progressFill}></div>
+                                <div
+                                    className={styles.progressFill}
+                                    style={{ animationDuration: `${animationTime}ms` }}
+                                ></div>
                             </div>
 
                             <div className={styles.stepsList}>
                                 <div className={styles.stepItem}>
-                                    <img src={checkIcon} alt="Complete" className={styles.stepIconPulsing} />
-                                    <span className={styles.stepText}>Analyzing logic part</span>
+                                    <img src={step1.icon} alt="Step 1" className={step1.className} />
+                                    <span className={animationStage >= 2 ? styles.stepText : styles.stepTextPending}>
+                                        Analyzing logic part
+                                    </span>
                                 </div>
                                 <div className={styles.stepItem}>
-                                    <img src={loaderCircleIcon} alt="Loading" className={styles.stepIconSpinAndPulse} />
-                                    <span className={styles.stepTextPending}>Evaluating answers...</span>
+                                    <img src={step2.icon} alt="Step 2" className={step2.className} />
+                                    <span className={animationStage >= 3 ? styles.stepText : styles.stepTextPending}>
+                                        Evaluating answers...
+                                    </span>
                                 </div>
                                 <div className={styles.stepItem}>
-                                    <img src={circleDashedIcon} alt="Pending" className={styles.stepIconSpinning} />
-                                    <span className={styles.stepTextPending}>Calculating final score</span>
+                                    <img src={step3.icon} alt="Step 3" className={step3.className} />
+                                    <span className={animationStage >= 4 ? styles.stepText : styles.stepTextPending}>
+                                        Calculating final score
+                                    </span>
                                 </div>
                             </div>
+
+                            {animationStage >= 5 && (
+                                <p className={styles.securityText}>
+                                    Ensure your data is secure with your report
+                                </p>
+                            )}
                         </div>
                     </div>
                 )}

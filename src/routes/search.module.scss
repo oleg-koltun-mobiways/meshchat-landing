@@ -208,7 +208,17 @@
     width: 35%;
     background: linear-gradient(90deg, #FF6B35 0%, #FFA500 100%);
     border-radius: 4px 0 0 4px;
-    animation: progressAnimation 10s ease-in-out;
+    animation: progressAnimation ease-in-out forwards;
+}
+
+.securityText {
+    font-size: $font-size-base;
+    color: $black;
+    text-align: center;
+    margin-top: 24px;
+    font-weight: 500;
+    opacity: 0;
+    animation: slideUpFade 0.8s ease-out forwards;
 }
 
 @keyframes progressAnimation {
@@ -261,6 +271,18 @@
     }
 }
 
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes spinAndPulse {
     0% {
         opacity: 1;
@@ -278,11 +300,28 @@
     }
 }
 
+@keyframes pop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 .stepsList {
     @include flex-column;
     gap: 12px;
-    width: 100%;
-    max-width: 350px;
+    width: fit-content;
+    align-items: flex-start;
 }
 
 .stepItem {
@@ -307,7 +346,7 @@
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    animation: pulse 1.5s ease-in-out infinite;
+    animation: pop 0.5s ease-out forwards;
 }
 
 .stepIconSpinAndPulse {
