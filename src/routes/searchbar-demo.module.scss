@@ -1,0 +1,62 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.demoContainer {
+    min-height: 100vh;
+    padding: 60px 20px;
+    background: linear-gradient(180deg, #f5e6e8 0%, #fce8e5 100%);
+}
+
+.title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 40px;
+    color: $black;
+}
+
+.demoSection {
+    max-width: 600px;
+    margin: 0 auto 60px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.sectionTitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: $black;
+    text-align: center;
+}
+
+.comparisonSection {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.figmaImage {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.note {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: $gray-600;
+    text-align: center;
+    margin-top: 16px;
+    font-style: italic;
+}

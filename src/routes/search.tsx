@@ -1,12 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
 import React, { useState, useEffect } from 'react';
-import searchIcon from '../assets/icons/search.svg';
-import closeIcon from '../assets/icons/close.svg';
 import twitterIcon from '../assets/icons/twitter.svg';
 import linkedinIcon from '../assets/icons/linkedin.svg';
 import facebookIcon from '../assets/icons/facebook.svg';
 import checkIcon from '../assets/icons/check-circle.svg';
+import circleDashedIcon from '../assets/icons/circle-dashed.svg';
+import loaderCircleIcon from '../assets/icons/loader-circle.svg';
 import styles from './search.module.scss';
+import SearchBar from "../components/SearchBar";
 
 type SearchParams = {
     search?: string;
@@ -34,7 +35,7 @@ function SearchComponent() {
             setIsSearching(true);
             const timer = setTimeout(() => {
                 setIsSearching(false);
-            }, 3000);
+            }, 100000);
             return () => clearTimeout(timer);
         } else {
             setIsSearching(false);
@@ -50,53 +51,50 @@ function SearchComponent() {
         }
     };
 
-    const handleClearClick = () => {
-        setSearchQuery('');
-    };
-
-    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            handleSearchClick();
-        }
-    };
+    // const handleClearClick = () => {
+    //     setSearchQuery('');
+    // };
+    //
+    // const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    //     if (e.key === 'Enter') {
+    //         handleSearchClick();
+    //     }
+    // };
 
     return (
         <div className={styles.page}>
             <div className={styles.searchSection}>
                 <div className={styles.searchContainer}>
                     {/* Search Input */}
-                    <div className={styles.searchInputWrapper}>
-                        <div className={styles.searchInputContainer}>
-                            <input
-                                type="text"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                onKeyPress={handleKeyPress}
-                                placeholder="Angelina Jolie, USA, actress"
-                                className={styles.searchInput}
-                            />
-                            {searchQuery && (
-                                <button
-                                    onClick={handleClearClick}
-                                    className={styles.clearButton}
-                                    aria-label="Clear search"
-                                >
-                                    <img src={closeIcon} alt="Clear" className={styles.icon} />
-                                </button>
-                            )}
-                        </div>
-                        <button
-                            onClick={handleSearchClick}
-                            className={styles.searchButton}
-                            aria-label="Search"
-                        >
-                            <img src={searchIcon} alt="Search" className={styles.icon} />
-                        </button>
-                    </div>
-
-                    <p className={styles.helperText}>
-                        Enter full name and any known details to start search
-                    </p>
+                    {/*<div className={styles.searchInputWrapper}>*/}
+                    {/*    <div className={styles.searchInputContainer}>*/}
+                    {/*        <input*/}
+                    {/*            type="text"*/}
+                    {/*            value={searchQuery}*/}
+                    {/*            onChange={(e) => setSearchQuery(e.target.value)}*/}
+                    {/*            onKeyPress={handleKeyPress}*/}
+                    {/*            placeholder="Angelina Jolie, USA, actress"*/}
+                    {/*            className={styles.searchInput}*/}
+                    {/*        />*/}
+                    {/*        {searchQuery && (*/}
+                    {/*            <button*/}
+                    {/*                onClick={handleClearClick}*/}
+                    {/*                className={styles.clearButton}*/}
+                    {/*                aria-label="Clear search"*/}
+                    {/*            >*/}
+                    {/*                <img src={closeIcon} alt="Clear" className={styles.icon} />*/}
+                    {/*            </button>*/}
+                    {/*        )}*/}
+                    {/*    </div>*/}
+                    {/*    <button*/}
+                    {/*        onClick={handleSearchClick}*/}
+                    {/*        className={styles.searchButton}*/}
+                    {/*        aria-label="Search"*/}
+                    {/*    >*/}
+                    {/*        <img src={searchIcon} alt="Search" className={styles.icon} />*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
+                    <SearchBar value={searchQuery} />
                 </div>
 
                 {/* Search Results / Loading State */}
@@ -126,15 +124,15 @@ function SearchComponent() {
 
                             <div className={styles.stepsList}>
                                 <div className={styles.stepItem}>
-                                    <img src={checkIcon} alt="Complete" className={styles.stepIcon} />
+                                    <img src={checkIcon} alt="Complete" className={styles.stepIconPulsing} />
                                     <span className={styles.stepText}>Analyzing logic part</span>
                                 </div>
                                 <div className={styles.stepItem}>
-                                    <div className={styles.stepIconPending}></div>
+                                    <img src={loaderCircleIcon} alt="Loading" className={styles.stepIconSpinAndPulse} />
                                     <span className={styles.stepTextPending}>Evaluating answers...</span>
                                 </div>
                                 <div className={styles.stepItem}>
-                                    <div className={styles.stepIconPending}></div>
+                                    <img src={circleDashedIcon} alt="Pending" className={styles.stepIconSpinning} />
                                     <span className={styles.stepTextPending}>Calculating final score</span>
                                 </div>
                             </div>
