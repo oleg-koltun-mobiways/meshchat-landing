@@ -8,6 +8,7 @@ import circleDashedIcon from '../assets/icons/circle-dashed.svg';
 import loaderCircleIcon from '../assets/icons/loader-circle.svg';
 import styles from './search.module.scss';
 import SearchBar from "../components/SearchBar";
+import { GetReportForm } from '../components/GetReportForm/GetReportForm';
 
 type SearchParams = {
     search?: string;
@@ -44,6 +45,7 @@ function SearchComponent() {
             timers.push(setTimeout(() => setAnimationStage(3), 8000));
             timers.push(setTimeout(() => setAnimationStage(4), 10000));
             timers.push(setTimeout(() => setAnimationStage(5), 12000));
+            timers.push(setTimeout(() => setAnimationStage(6), 14000));
 
             const finalTimer = setTimeout(() => {
                 // Optional: handle end of search
@@ -154,9 +156,12 @@ function SearchComponent() {
                             </div>
 
                             {animationStage >= 5 && (
-                                <p className={styles.securityText}>
-                                    Ensure your data is secure with your report
-                                </p>
+                                <div style={{ marginTop: '24px', width: '100%', display: 'flex', justifyContent: 'center' }}>
+                                    <GetReportForm onGetReport={(data) => {
+                                        console.log('Get Report requested:', data);
+                                        // TODO: Implement actual report handling
+                                    }} />
+                                </div>
                             )}
                         </div>
                     </div>
