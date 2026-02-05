@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import React, { useState } from 'react';
 import SearchBar from '../components/SearchBar';
 import styles from './searchbar-demo.module.scss';
 
@@ -8,7 +7,7 @@ export const Route = createFileRoute('/searchbar-demo')({
 });
 
 function SearchBarDemo() {
-    const [searchValue, setSearchValue] = useState('Angelina Jolie, USA, actress');
+    const searchValue = 'Angelina Jolie, USA, actress';
 
     return (
         <div className={styles.demoContainer}>
@@ -18,7 +17,6 @@ function SearchBarDemo() {
                 <h2 className={styles.sectionTitle}>With Value</h2>
                 <SearchBar
                     value={searchValue}
-                    onChange={setSearchValue}
                 />
             </div>
 
@@ -26,16 +24,13 @@ function SearchBarDemo() {
                 <h2 className={styles.sectionTitle}>Empty (showing placeholder)</h2>
                 <SearchBar
                     value=""
-                    onChange={() => { }}
                 />
             </div>
 
             <div className={styles.demoSection}>
-                <h2 className={styles.sectionTitle}>Custom Helper Text</h2>
+                <h2 className={styles.sectionTitle}>Focused State</h2>
                 <SearchBar
                     value=""
-                    onChange={() => { }}
-                    helperText="Custom helper text for search"
                 />
             </div>
 
