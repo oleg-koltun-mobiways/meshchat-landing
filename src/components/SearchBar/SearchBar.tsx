@@ -1,6 +1,6 @@
 import React from 'react';
 import searchIcon from '../../assets/icons/close.svg'; // Note: close.svg actually contains search icon
-import closeIcon from '../../assets/icons/search.svg'; // Note: search.svg actually contains close icon
+// import closeIcon from '../../assets/icons/search.svg'; // Note: search.svg actually contains close icon
 import styles from './SearchBar.module.scss';
 
 interface SearchBarProps {
@@ -25,9 +25,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
                             {value || placeholder}
                         </p>
                     </div>
-                    <div className={styles.closeIcon}>
-                        <img src={closeIcon} alt="" className={styles.icon} />
-                    </div>
+                    {/*<div className={styles.closeIcon}>*/}
+                    {/*    <img src={closeIcon} alt="" className={styles.icon} />*/}
+                    {/*</div>*/}
                 </div>
                 <div className={styles.searchIcon}>
                     <img src={searchIcon} alt="" className={styles.icon} />

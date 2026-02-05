@@ -1,14 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import twitterIcon from '../assets/icons/twitter.svg';
 import linkedinIcon from '../assets/icons/linkedin.svg';
 import facebookIcon from '../assets/icons/facebook.svg';
+import tiktokIcon from '../assets/images/TikTok.svg';
+import snapchatIcon from '../assets/images/Snapchat.svg';
 import checkIcon from '../assets/icons/check-circle.svg';
 import circleDashedIcon from '../assets/icons/circle-dashed.svg';
 import loaderCircleIcon from '../assets/icons/loader-circle.svg';
 import styles from './search.module.scss';
 import SearchBar from "../components/SearchBar";
-import { GetReportForm } from '../components/GetReportForm/GetReportForm';
+import { GetReportForm, GetReportFormRef } from '../components/GetReportForm/GetReportForm';
+import Footer from "../components/Footer";
 
 type SearchParams = {
     search?: string;
@@ -27,10 +30,11 @@ export const Route = createFileRoute('/search')({
 
 function SearchComponent() {
     const { search: searchParam } = Route.useSearch();
-    const navigate = Route.useNavigate();
+    // const navigate = Route.useNavigate();
     const [searchQuery, setSearchQuery] = useState(searchParam || '');
     const [isSearching, setIsSearching] = useState(!!searchParam);
     const [animationStage, setAnimationStage] = useState(0);
+    const formRef = useRef<GetReportFormRef>(null);
 
     useEffect(() => {
         setSearchQuery(searchParam || '');
@@ -44,7 +48,7 @@ function SearchComponent() {
             timers.push(setTimeout(() => setAnimationStage(2), 5000));
             timers.push(setTimeout(() => setAnimationStage(3), 8000));
             timers.push(setTimeout(() => setAnimationStage(4), 10000));
-            timers.push(setTimeout(() => setAnimationStage(5), 12000));
+            timers.push(setTimeout(() => setAnimationStage(5), 11000));
             timers.push(setTimeout(() => setAnimationStage(6), 14000));
 
             const finalTimer = setTimeout(() => {
@@ -61,14 +65,57 @@ function SearchComponent() {
         }
     }, [searchParam]);
 
-    const handleSearchClick = () => {
-        if (searchQuery.trim()) {
-            navigate({
-                to: '/search',
-                search: { search: searchQuery.trim() },
-            });
+    // Auto-scroll to bottom when animation finishes (stage 6)
+    useEffect(() => {
+        if (animationStage === 5) {
+            // Add a small delay to let the form render with its slide-up animation
+            const scrollTimer = setTimeout(() => {
+                const targetPosition = document.documentElement.scrollHeight;
+                const startPosition = window.pageYOffset;
+                const distance = targetPosition - startPosition;
+                const duration = 1500; // 1.8 seconds for slower, smoother scroll
+                let startTime: number | null = null;
+
+                // Easing function for smooth acceleration and deceleration
+                const easeInOutCubic = (t: number): number => {
+                    return t < 0.5
+                        ? 4 * t * t * t
+                        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                };
+
+                const animation = (currentTime: number) => {
+                    if (startTime === null) startTime = currentTime;
+                    const timeElapsed = currentTime - startTime;
+                    const progress = Math.min(timeElapsed / duration, 1);
+                    const ease = easeInOutCubic(progress);
+
+                    window.scrollTo(0, startPosition + distance * ease);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animation);
+                    } else {
+                        // Focus input after scroll completes
+                        setTimeout(() => {
+                            formRef.current?.focusInput();
+                        }, 100);
+                    }
+                };
+
+                requestAnimationFrame(animation);
+            }, 200);
+
+            return () => clearTimeout(scrollTimer);
         }
-    };
+    }, [animationStage]);
+
+    // const handleSearchClick = () => {
+    //     if (searchQuery.trim()) {
+    //         navigate({
+    //             to: '/search',
+    //             search: { search: searchQuery.trim() },
+    //         });
+    //     }
+    // };
 
     const getStepState = (stepIndex: number) => {
         if (animationStage === 0) {
@@ -112,20 +159,29 @@ function SearchComponent() {
                 {isSearching && searchParam && (
                     <div className={styles.resultsSection}>
                         <div className={styles.profileCard}>
-                            <div className={styles.profileAvatar}></div>
-                            <p className={styles.profileName}>{searchParam}</p>
+                            <div className={`${styles.profileAvatar} ${animationStage >= 0 && animationStage < 5 ? styles.shimmerActive : ''}`}></div>
+                            <div className={styles.profileInfo}>
+                              <p className={styles.profileTitle}>{animationStage < 5 ? 'Angelina' : 'Angelina Jolie, actress, filmmaker'}</p>
+	                            <p className={` ${styles.profileDescription} ${animationStage < 5 ? styles.shimmerActive : ''}`}>
+		                            {animationStage < 5 ? '' : 'humanitarian known as a ...'}
+	                            </p>
+                            </div>
                         </div>
 
                         <div className={styles.loadingContainer}>
-                            <div className={styles.socialIcons}>
-                                <img src={twitterIcon} alt="Twitter/X" className={styles.socialIcon} />
-                                <img src={linkedinIcon} alt="LinkedIn" className={styles.socialIcon} />
-                                <img src={facebookIcon} alt="Facebook" className={styles.socialIcon} />
-                            </div>
+                            <div className={styles.loadingHeader}>
+                                <div className={styles.socialIcons}>
+                                    <img src={twitterIcon} alt="Twitter/X" className={styles.socialIcon} />
+                                    <img src={linkedinIcon} alt="LinkedIn" className={styles.socialIcon} />
+                                    <img src={tiktokIcon} alt="TikTok" className={styles.socialIcon} />
+                                    <img src={snapchatIcon} alt="Snapchat" className={styles.socialIcon} />
+                                    <img src={facebookIcon} alt="Facebook" className={styles.socialIcon} />
+                                </div>
 
-                            <p className={styles.loadingTitle}>
-                                Searching "{searchParam}" Getting your results...
-                            </p>
+                                <span className={styles.loadingTitle}>
+                                    Searching "{searchParam}" Getting your results...
+                                </span>
+                            </div>
 
                             <div className={styles.progressBar}>
                                 <div
@@ -157,16 +213,20 @@ function SearchComponent() {
 
                             {animationStage >= 5 && (
                                 <div style={{ marginTop: '24px', width: '100%', display: 'flex', justifyContent: 'center' }}>
-                                    <GetReportForm onGetReport={(data) => {
-                                        console.log('Get Report requested:', data);
-                                        // TODO: Implement actual report handling
-                                    }} />
+                                    <GetReportForm
+                                        ref={formRef}
+                                        onGetReport={(data) => {
+                                            console.log('Get Report requested:', data);
+                                            // TODO: Implement actual report handling
+                                        }}
+                                    />
                                 </div>
                             )}
                         </div>
                     </div>
                 )}
             </div>
+	          <Footer/>
         </div>
     );
 }

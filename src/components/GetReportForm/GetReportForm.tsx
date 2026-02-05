@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useImperativeHandle, forwardRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -19,7 +19,13 @@ interface GetReportFormProps {
     onGetReport: (data: FormData) => void;
 }
 
-export const GetReportForm: React.FC<GetReportFormProps> = ({ onGetReport }) => {
+export interface GetReportFormRef {
+    focusInput: () => void;
+}
+
+export const GetReportForm = forwardRef<GetReportFormRef, GetReportFormProps>(({ onGetReport }, ref) => {
+    const [emailInputElement, setEmailInputElement] = useState<HTMLInputElement | null>(null);
+
     const {
         register,
         handleSubmit,
@@ -45,6 +51,21 @@ export const GetReportForm: React.FC<GetReportFormProps> = ({ onGetReport }) => 
         setValue('agreed', !isAgreed, { shouldValidate: true });
     };
 
+    // Expose focus method to parent
+    useImperativeHandle(ref, () => ({
+        focusInput: () => {
+            emailInputElement?.focus();
+        }
+    }));
+
+    // Merge refs from react-hook-form register and our custom ref
+    const { ref: emailRegisterRef, ...emailRegisterProps } = register('email');
+
+    const mergeRefs = (el: HTMLInputElement | null) => {
+        setEmailInputElement(el);
+        emailRegisterRef(el);
+    };
+
     return (
         <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
             <p className={styles.title}>Ensure your data is secure with your report.</p>
@@ -56,7 +77,8 @@ export const GetReportForm: React.FC<GetReportFormProps> = ({ onGetReport }) => 
                     type="email"
                     placeholder="Enter your email"
                     className={styles.input}
-                    {...register('email')}
+                    {...emailRegisterProps}
+                    ref={mergeRefs}
                 />
             </div>
 
@@ -87,4 +109,6 @@ export const GetReportForm: React.FC<GetReportFormProps> = ({ onGetReport }) => 
             </button>
         </form>
     );
-};
+});
+
+GetReportForm.displayName = 'GetReportForm';

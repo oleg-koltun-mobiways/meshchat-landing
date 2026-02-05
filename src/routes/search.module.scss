@@ -2,18 +2,19 @@
 @use '../styles/mixins' as *;
 
 .page {
+    @include flex-column;
+    justify-content: space-between;
     min-height: 100vh;
-    background: linear-gradient(180deg, #EDE9F3 0%, #EDE9F3 2%, #EFD8D5 4%, #F5BA9B 15%, #EDE5ED 35%, #ECECFB 50%, #EBEBFB 60%, #E3E2FB 70%, #DEDEFB 80%, #DDD7F3 90%, #E1C8D2 96%, #E6BDB9 100%);
+    background: linear-gradient(180deg, #EDE9F3 0%, #EDE9F3 2%, #EDE9F3 6%, #EFD8D5 15%, #F5BA9B 45%, #F5BA9B 65%, #EDE4EB 98%);
     padding-top: 120px;
-    padding-bottom: 48px;
 }
 
 .searchSection {
     @include flex-column;
     align-items: center;
     gap: 48px;
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .searchContainer {
@@ -22,6 +23,7 @@
     gap: 8px;
     width: 100%;
     max-width: 500px;
+    margin-top: 15px;
 }
 
 .searchInputWrapper {
@@ -141,6 +143,10 @@
     gap: 48px;
     width: 100%;
     max-width: 600px;
+
+    @media screen and (max-width: 600px) {
+        gap: 20px;
+    }
 }
 
 .profileCard {
@@ -151,6 +157,7 @@
     border-radius: $border-radius-lg;
     width: 100%;
     max-width: 436px;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10);
 }
 
 .profileAvatar {
@@ -161,11 +168,54 @@
     flex-shrink: 0;
 }
 
-.profileName {
-    font-size: $font-size-base;
+.profileTitle {
+  font-weight: 500;
+}
+
+.profileDescription {
+    display: flex;
+    flex-direction: column;
+    font-size: $font-size-sm;
     color: $black;
     margin: 0;
-    line-height: 54px;
+    height: 100%;
+}
+
+// Shimmer animation styles - only active when .shimmerActive class is applied
+.shimmerActive.profileAvatar {
+    background: linear-gradient(90deg,
+            #f0efef 0%,
+            #fafafa 50%,
+            #f0efef 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite ease-in-out;
+}
+
+.shimmerActive.profileDescription {
+    display: flex;
+    flex: 1;
+    height: 15px;
+    width: 120px;
+    align-self: center;
+    border-radius: 3px;
+    background: linear-gradient(90deg,
+            #f0efef 0%,
+            #fafafa 50%,
+            #f0efef 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite ease-in-out;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 .loadingContainer {
@@ -177,20 +227,36 @@
 
 .socialIcons {
     @include flex-center;
-    gap: 8px;
 }
 
 .socialIcon {
-    width: 32px;
-    height: 32px;
+    width: 29px;
+    height: 29px;
+    margin-left: -10px;
+}
+
+.loadingHeader {
+    @include flex-center;
+    gap: 4px;
+
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+        gap: 8px;
+    }
 }
 
 .loadingTitle {
     font-size: $font-size-base;
     color: $black;
-    text-align: center;
-    margin: 0;
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    font-style: normal;
     font-weight: 500;
+    line-height: normal;
+
+   @media screen and (max-width: 600px) {
+        font-size: 14px;
+    }
 }
 
 .progressBar {
@@ -412,9 +478,5 @@
 
     .searchContainer {
         max-width: 685px;
-    }
-
-    .resultsSection {
-        max-width: 766px;
     }
 }
