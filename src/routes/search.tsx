@@ -1,16 +1,23 @@
 import { createFileRoute } from '@tanstack/react-router';
-import React, { useState, useEffect } from 'react';
-import searchIcon from '../assets/icons/search.svg';
-import closeIcon from '../assets/icons/close.svg';
+import { useState, useEffect, useRef } from 'react';
 import twitterIcon from '../assets/icons/twitter.svg';
 import linkedinIcon from '../assets/icons/linkedin.svg';
 import facebookIcon from '../assets/icons/facebook.svg';
+import tiktokIcon from '../assets/images/TikTok.svg';
+import snapchatIcon from '../assets/images/Snapchat.svg';
 import checkIcon from '../assets/icons/check-circle.svg';
+import circleDashedIcon from '../assets/icons/circle-dashed.svg';
+import loaderCircleIcon from '../assets/icons/loader-circle.svg';
 import styles from './search.module.scss';
+import SearchBar from "../components/SearchBar";
+import { GetReportForm, GetReportFormRef } from '../components/GetReportForm/GetReportForm';
+import Footer from "../components/Footer";
 
 type SearchParams = {
     search?: string;
 };
+
+const animationTime = 10000;
 
 export const Route = createFileRoute('/search')({
     component: SearchComponent,
@@ -23,125 +30,203 @@ export const Route = createFileRoute('/search')({
 
 function SearchComponent() {
     const { search: searchParam } = Route.useSearch();
-    const navigate = Route.useNavigate();
+    // const navigate = Route.useNavigate();
     const [searchQuery, setSearchQuery] = useState(searchParam || '');
     const [isSearching, setIsSearching] = useState(!!searchParam);
+    const [animationStage, setAnimationStage] = useState(0);
+    const formRef = useRef<GetReportFormRef>(null);
 
     useEffect(() => {
         setSearchQuery(searchParam || '');
         if (searchParam) {
-            // Simulate search process
             setIsSearching(true);
-            const timer = setTimeout(() => {
-                setIsSearching(false);
-            }, 3000);
-            return () => clearTimeout(timer);
+            setAnimationStage(0);
+
+            const timers: NodeJS.Timeout[] = [];
+
+            timers.push(setTimeout(() => setAnimationStage(1), 1000));
+            timers.push(setTimeout(() => setAnimationStage(2), 5000));
+            timers.push(setTimeout(() => setAnimationStage(3), 8000));
+            timers.push(setTimeout(() => setAnimationStage(4), 10000));
+            timers.push(setTimeout(() => setAnimationStage(5), 11000));
+            timers.push(setTimeout(() => setAnimationStage(6), 14000));
+
+            const finalTimer = setTimeout(() => {
+                // Optional: handle end of search
+            }, animationTime + 5000);
+
+            return () => {
+                timers.forEach(clearTimeout);
+                clearTimeout(finalTimer);
+            };
         } else {
             setIsSearching(false);
+            setAnimationStage(0);
         }
     }, [searchParam]);
 
-    const handleSearchClick = () => {
-        if (searchQuery.trim()) {
-            navigate({
-                to: '/search',
-                search: { search: searchQuery.trim() },
-            });
+    // Auto-scroll to bottom when animation finishes (stage 6)
+    useEffect(() => {
+        if (animationStage === 5) {
+            // Add a small delay to let the form render with its slide-up animation
+            const scrollTimer = setTimeout(() => {
+                const targetPosition = document.documentElement.scrollHeight;
+                const startPosition = window.pageYOffset;
+                const distance = targetPosition - startPosition;
+                const duration = 1500; // 1.8 seconds for slower, smoother scroll
+                let startTime: number | null = null;
+
+                // Easing function for smooth acceleration and deceleration
+                const easeInOutCubic = (t: number): number => {
+                    return t < 0.5
+                        ? 4 * t * t * t
+                        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                };
+
+                const animation = (currentTime: number) => {
+                    if (startTime === null) startTime = currentTime;
+                    const timeElapsed = currentTime - startTime;
+                    const progress = Math.min(timeElapsed / duration, 1);
+                    const ease = easeInOutCubic(progress);
+
+                    window.scrollTo(0, startPosition + distance * ease);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animation);
+                    } else {
+                        // Focus input after scroll completes
+                        setTimeout(() => {
+                            formRef.current?.focusInput();
+                        }, 100);
+                    }
+                };
+
+                requestAnimationFrame(animation);
+            }, 200);
+
+            return () => clearTimeout(scrollTimer);
         }
+    }, [animationStage]);
+
+    // const handleSearchClick = () => {
+    //     if (searchQuery.trim()) {
+    //         navigate({
+    //             to: '/search',
+    //             search: { search: searchQuery.trim() },
+    //         });
+    //     }
+    // };
+
+    const getStepState = (stepIndex: number) => {
+        if (animationStage === 0) {
+            return { icon: circleDashedIcon, className: styles.stepIconSpinning };
+        }
+
+        if (stepIndex === 0) { // Analyzing logic part
+            if (animationStage >= 2) {
+                return { icon: checkIcon, className: styles.stepIconPulsing };
+            } else if (animationStage >= 1) {
+                return { icon: loaderCircleIcon, className: styles.stepIconSpinAndPulse };
+            }
+        } else if (stepIndex === 1) { // Evaluating answers
+            if (animationStage >= 3) {
+                return { icon: checkIcon, className: styles.stepIconPulsing };
+            } else if (animationStage >= 2) {
+                return { icon: loaderCircleIcon, className: styles.stepIconSpinAndPulse };
+            }
+        } else if (stepIndex === 2) { // Calculating final score
+            if (animationStage >= 4) {
+                return { icon: checkIcon, className: styles.stepIconPulsing };
+            } else if (animationStage >= 3) {
+                return { icon: loaderCircleIcon, className: styles.stepIconSpinAndPulse };
+            }
+        }
+
+        return { icon: circleDashedIcon, className: styles.stepIconSpinning };
     };
 
-    const handleClearClick = () => {
-        setSearchQuery('');
-    };
-
-    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            handleSearchClick();
-        }
-    };
+    const step1 = getStepState(0);
+    const step2 = getStepState(1);
+    const step3 = getStepState(2);
 
     return (
         <div className={styles.page}>
             <div className={styles.searchSection}>
                 <div className={styles.searchContainer}>
-                    {/* Search Input */}
-                    <div className={styles.searchInputWrapper}>
-                        <div className={styles.searchInputContainer}>
-                            <input
-                                type="text"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                onKeyPress={handleKeyPress}
-                                placeholder="Angelina Jolie, USA, actress"
-                                className={styles.searchInput}
-                            />
-                            {searchQuery && (
-                                <button
-                                    onClick={handleClearClick}
-                                    className={styles.clearButton}
-                                    aria-label="Clear search"
-                                >
-                                    <img src={closeIcon} alt="Clear" className={styles.icon} />
-                                </button>
-                            )}
-                        </div>
-                        <button
-                            onClick={handleSearchClick}
-                            className={styles.searchButton}
-                            aria-label="Search"
-                        >
-                            <img src={searchIcon} alt="Search" className={styles.icon} />
-                        </button>
-                    </div>
-
-                    <p className={styles.helperText}>
-                        Enter full name and any known details to start search
-                    </p>
+                    <SearchBar value={searchQuery} />
                 </div>
 
-                {/* Search Results / Loading State */}
                 {isSearching && searchParam && (
                     <div className={styles.resultsSection}>
-                        {/* Profile Card */}
                         <div className={styles.profileCard}>
-                            <div className={styles.profileAvatar}></div>
-                            <p className={styles.profileName}>{searchParam}</p>
+                            <div className={`${styles.profileAvatar} ${animationStage >= 0 && animationStage < 5 ? styles.shimmerActive : ''}`}></div>
+                            <div className={styles.profileInfo}>
+                              <p className={styles.profileTitle}>{animationStage < 5 ? 'Angelina' : 'Angelina Jolie, actress, filmmaker'}</p>
+	                            <p className={` ${styles.profileDescription} ${animationStage < 5 ? styles.shimmerActive : ''}`}>
+		                            {animationStage < 5 ? '' : 'humanitarian known as a ...'}
+	                            </p>
+                            </div>
                         </div>
 
-                        {/* Loading State */}
                         <div className={styles.loadingContainer}>
-                            <div className={styles.socialIcons}>
-                                <img src={twitterIcon} alt="Twitter/X" className={styles.socialIcon} />
-                                <img src={linkedinIcon} alt="LinkedIn" className={styles.socialIcon} />
-                                <img src={facebookIcon} alt="Facebook" className={styles.socialIcon} />
+                            <div className={styles.loadingHeader}>
+                                <div className={styles.socialIcons}>
+                                    <img src={twitterIcon} alt="Twitter/X" className={styles.socialIcon} />
+                                    <img src={linkedinIcon} alt="LinkedIn" className={styles.socialIcon} />
+                                    <img src={tiktokIcon} alt="TikTok" className={styles.socialIcon} />
+                                    <img src={snapchatIcon} alt="Snapchat" className={styles.socialIcon} />
+                                    <img src={facebookIcon} alt="Facebook" className={styles.socialIcon} />
+                                </div>
+
+                                <span className={styles.loadingTitle}>
+                                    Searching "{searchParam}" Getting your results...
+                                </span>
                             </div>
 
-                            <p className={styles.loadingTitle}>
-                                Searching "Angelina Jolie" Getting your results...
-                            </p>
-
                             <div className={styles.progressBar}>
-                                <div className={styles.progressFill}></div>
+                                <div
+                                    className={styles.progressFill}
+                                    style={{ animationDuration: `${animationTime}ms` }}
+                                ></div>
                             </div>
 
                             <div className={styles.stepsList}>
                                 <div className={styles.stepItem}>
-                                    <img src={checkIcon} alt="Complete" className={styles.stepIcon} />
-                                    <span className={styles.stepText}>Analyzing logic part</span>
+                                    <img src={step1.icon} alt="Step 1" className={step1.className} />
+                                    <span className={animationStage >= 2 ? styles.stepText : styles.stepTextPending}>
+                                        Analyzing logic part
+                                    </span>
                                 </div>
                                 <div className={styles.stepItem}>
-                                    <div className={styles.stepIconPending}></div>
-                                    <span className={styles.stepTextPending}>Evaluating answers...</span>
+                                    <img src={step2.icon} alt="Step 2" className={step2.className} />
+                                    <span className={animationStage >= 3 ? styles.stepText : styles.stepTextPending}>
+                                        Evaluating answers...
+                                    </span>
                                 </div>
                                 <div className={styles.stepItem}>
-                                    <div className={styles.stepIconPending}></div>
-                                    <span className={styles.stepTextPending}>Calculating final score</span>
+                                    <img src={step3.icon} alt="Step 3" className={step3.className} />
+                                    <span className={animationStage >= 4 ? styles.stepText : styles.stepTextPending}>
+                                        Calculating final score
+                                    </span>
                                 </div>
                             </div>
+
+                            {animationStage >= 5 && (
+                                <div style={{ marginTop: '24px', width: '100%', display: 'flex', justifyContent: 'center' }}>
+                                    <GetReportForm
+                                        ref={formRef}
+                                        onGetReport={(data) => {
+                                            console.log('Get Report requested:', data);
+                                            // TODO: Implement actual report handling
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
             </div>
+	          <Footer/>
         </div>
     );
 }

@@ -22,6 +22,8 @@
 
 .stepsList {
     @include flex-column;
+    @include flex-center;
+
     gap: 12px;
     align-items: center;
     width: 100%;

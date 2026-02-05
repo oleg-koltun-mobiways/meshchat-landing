@@ -4,7 +4,7 @@ const config: Config = {
     preset: 'ts-jest',
     testEnvironment: 'jsdom',
     moduleNameMapper: {
-        '\\.(css|scss|sass)$': 'identity-obj-proxy',
+        '\\.(css|scss|sass)$': '<rootDir>/src/__mocks__/styleMock.ts',
         '\\.(jpg|jpeg|png|gif|svg|webp)$': '<rootDir>/src/__mocks__/fileMock.ts',
     },
     setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
